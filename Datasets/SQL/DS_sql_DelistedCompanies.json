@@ -1,0 +1,51 @@
+{
+    "name": "DS_sql_DelistedCompanies",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "LS_sql_FinancialData",
+            "type": "LinkedServiceReference"
+        },
+        "folder": {
+            "name": "SQL"
+        },
+        "annotations": [],
+        "type": "AzurePostgreSqlTable",
+        "schema": [
+            {
+                "name": "symbol",
+                "type": "character varying",
+                "precision": 0,
+                "scale": 0
+            },
+            {
+                "name": "companyname",
+                "type": "character varying",
+                "precision": 0,
+                "scale": 0
+            },
+            {
+                "name": "exchange",
+                "type": "character varying",
+                "precision": 0,
+                "scale": 0
+            },
+            {
+                "name": "ipodate",
+                "type": "date",
+                "precision": 0,
+                "scale": 0
+            },
+            {
+                "name": "delisteddate",
+                "type": "date",
+                "precision": 0,
+                "scale": 0
+            }
+        ],
+        "typeProperties": {
+            "schema": "financialdata",
+            "table": "delistedcompanies"
+        }
+    },
+    "type": "Microsoft.DataFactory/factories/datasets"
+}

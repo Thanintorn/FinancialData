@@ -1,0 +1,184 @@
+{
+    "name": "sql_db_HistoricalDividends_pipeline",
+    "properties": {
+        "activities": [
+            {
+                "name": "Copy HistoricalDividends to SQL database",
+                "type": "Copy",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "DelimitedTextSource",
+                        "storeSettings": {
+                            "type": "AzureBlobFSReadSettings",
+                            "recursive": true,
+                            "wildcardFileName": "*",
+                            "enablePartitionDiscovery": false
+                        },
+                        "formatSettings": {
+                            "type": "DelimitedTextReadSettings"
+                        }
+                    },
+                    "sink": {
+                        "type": "AzurePostgreSQLSink",
+                        "writeBatchSize": 1000000,
+                        "writeBatchTimeout": "00:30:00",
+                        "writeMethod": "CopyCommand"
+                    },
+                    "enableStaging": false,
+                    "translator": {
+                        "type": "TabularTranslator",
+                        "mappings": [
+                            {
+                                "source": {
+                                    "name": "date",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "date",
+                                    "type": "DateTime",
+                                    "physicalType": "date"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "label",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "label",
+                                    "type": "String",
+                                    "physicalType": "character varying"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "label_date",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "label_date",
+                                    "type": "Int32",
+                                    "physicalType": "integer"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "label_month",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "label_month",
+                                    "type": "Int32",
+                                    "physicalType": "integer"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "label_year",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "label_year",
+                                    "type": "Int32",
+                                    "physicalType": "integer"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "adjDividend",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "adjdividend",
+                                    "type": "Double",
+                                    "physicalType": "real"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "dividend",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "dividend",
+                                    "type": "Double",
+                                    "physicalType": "real"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "recordDate",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "recorddate",
+                                    "type": "DateTime",
+                                    "physicalType": "date"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "paymentDate",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "paymentdate",
+                                    "type": "DateTime",
+                                    "physicalType": "date"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "declarationDate",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "declarationdate",
+                                    "type": "DateTime",
+                                    "physicalType": "date"
+                                }
+                            }
+                        ],
+                        "typeConversion": true,
+                        "typeConversionSettings": {
+                            "allowDataTruncation": true,
+                            "treatBooleanAsNumber": false
+                        }
+                    }
+                },
+                "inputs": [
+                    {
+                        "referenceName": "DS_Processed_HistoricalDividends_data",
+                        "type": "DatasetReference"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "referenceName": "DS_sql_HistoricalDividends",
+                        "type": "DatasetReference"
+                    }
+                ]
+            }
+        ],
+        "annotations": []
+    }
+}

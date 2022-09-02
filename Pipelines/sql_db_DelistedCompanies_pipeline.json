@@ -1,0 +1,126 @@
+{
+    "name": "sql_db_DelistedCompanies_pipeline",
+    "properties": {
+        "activities": [
+            {
+                "name": "Copy data to SQL Database",
+                "type": "Copy",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "DelimitedTextSource",
+                        "storeSettings": {
+                            "type": "AzureBlobFSReadSettings",
+                            "recursive": true,
+                            "wildcardFileName": "*",
+                            "enablePartitionDiscovery": false
+                        },
+                        "formatSettings": {
+                            "type": "DelimitedTextReadSettings"
+                        }
+                    },
+                    "sink": {
+                        "type": "AzurePostgreSQLSink",
+                        "writeBatchSize": 1000000,
+                        "writeBatchTimeout": "00:30:00",
+                        "writeMethod": "CopyCommand"
+                    },
+                    "enableStaging": false,
+                    "translator": {
+                        "type": "TabularTranslator",
+                        "mappings": [
+                            {
+                                "source": {
+                                    "name": "symbol",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "symbol",
+                                    "type": "String",
+                                    "physicalType": "character varying"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "companyName",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "companyname",
+                                    "type": "String",
+                                    "physicalType": "character varying"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "exchange",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "exchange",
+                                    "type": "String",
+                                    "physicalType": "character varying"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "ipoDate",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "ipodate",
+                                    "type": "DateTime",
+                                    "physicalType": "date"
+                                }
+                            },
+                            {
+                                "source": {
+                                    "name": "delistedDate",
+                                    "type": "String",
+                                    "physicalType": "String"
+                                },
+                                "sink": {
+                                    "name": "delisteddate",
+                                    "type": "DateTime",
+                                    "physicalType": "date"
+                                }
+                            }
+                        ],
+                        "typeConversion": true,
+                        "typeConversionSettings": {
+                            "allowDataTruncation": true,
+                            "treatBooleanAsNumber": false
+                        }
+                    }
+                },
+                "inputs": [
+                    {
+                        "referenceName": "DS_Processed_DelistedCompanies_data",
+                        "type": "DatasetReference"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "referenceName": "DS_sql_DelistedCompanies",
+                        "type": "DatasetReference"
+                    }
+                ]
+            }
+        ],
+        "annotations": [],
+        "lastPublishTime": "2022-09-01T08:00:02Z"
+    },
+    "type": "Microsoft.DataFactory/factories/pipelines"
+}

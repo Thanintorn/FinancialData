@@ -1,0 +1,61 @@
+{
+    "name": "DS_dl_HistoricalDividends",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "LS_adls_financialdata",
+            "type": "LinkedServiceReference"
+        },
+        "folder": {
+            "name": "Historical Dividends"
+        },
+        "annotations": [],
+        "type": "DelimitedText",
+        "typeProperties": {
+            "location": {
+                "type": "AzureBlobFSLocation",
+                "fileName": "HistoricalDividends_data.csv",
+                "folderPath": "dataAPI",
+                "fileSystem": "rawdata"
+            },
+            "columnDelimiter": ",",
+            "escapeChar": "\\",
+            "firstRowAsHeader": true,
+            "quoteChar": "\""
+        },
+        "schema": [
+            {
+                "name": "symbol",
+                "type": "String"
+            },
+            {
+                "name": "date",
+                "type": "String"
+            },
+            {
+                "name": "label",
+                "type": "String"
+            },
+            {
+                "name": "adjDividend",
+                "type": "String"
+            },
+            {
+                "name": "dividend",
+                "type": "String"
+            },
+            {
+                "name": "recordDate",
+                "type": "String"
+            },
+            {
+                "name": "paymentDate",
+                "type": "String"
+            },
+            {
+                "name": "declarationDate",
+                "type": "String"
+            }
+        ]
+    },
+    "type": "Microsoft.DataFactory/factories/datasets"
+}

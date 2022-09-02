@@ -1,0 +1,19 @@
+{
+    "name": "DS_rest_HistoricalDividends",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "LS_rest_financialdata",
+            "type": "LinkedServiceReference"
+        },
+        "folder": {
+            "name": "Historical Dividends"
+        },
+        "annotations": [],
+        "type": "RestResource",
+        "typeProperties": {
+            "relativeUrl": "api/v3/historical-price-full/stock_dividend/AAPL?apikey=dbc6d5d0ac0cc4bcc286812126dd80f4"
+        },
+        "schema": []
+    },
+    "type": "Microsoft.DataFactory/factories/datasets"
+}

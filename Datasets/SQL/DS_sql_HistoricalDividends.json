@@ -1,0 +1,80 @@
+{
+    "name": "DS_sql_HistoricalDividends",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "LS_sql_FinancialData",
+            "type": "LinkedServiceReference"
+        },
+        "folder": {
+            "name": "SQL"
+        },
+        "annotations": [],
+        "type": "AzurePostgreSqlTable",
+        "schema": [
+            {
+                "name": "date",
+                "type": "date",
+                "precision": 0,
+                "scale": 0
+            },
+            {
+                "name": "label",
+                "type": "character varying",
+                "precision": 0,
+                "scale": 0
+            },
+            {
+                "name": "label_date",
+                "type": "integer",
+                "precision": 0,
+                "scale": 0
+            },
+            {
+                "name": "label_month",
+                "type": "integer",
+                "precision": 0,
+                "scale": 0
+            },
+            {
+                "name": "label_year",
+                "type": "integer",
+                "precision": 0,
+                "scale": 0
+            },
+            {
+                "name": "adjdividend",
+                "type": "real",
+                "precision": 0,
+                "scale": 0
+            },
+            {
+                "name": "dividend",
+                "type": "real",
+                "precision": 0,
+                "scale": 0
+            },
+            {
+                "name": "recorddate",
+                "type": "date",
+                "precision": 0,
+                "scale": 0
+            },
+            {
+                "name": "paymentdate",
+                "type": "date",
+                "precision": 0,
+                "scale": 0
+            },
+            {
+                "name": "declarationdate",
+                "type": "date",
+                "precision": 0,
+                "scale": 0
+            }
+        ],
+        "typeProperties": {
+            "schema": "financialdata",
+            "table": "historicaldividends"
+        }
+    }
+}

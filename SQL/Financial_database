@@ -1,0 +1,26 @@
+CREATE SCHEMA FinancialData
+
+CREATE TABLE financialdata.delistedCompanies
+(
+    symbol VARCHAR(10),
+    companyName VARCHAR(100),
+    exchange VARCHAR(10),
+    ipoDate Date,
+    delistedDate Date
+)
+
+CREATE TABLE financialdata.historicaldividends
+(
+    date DATE,
+    label VARCHAR(50),
+    label_date INT,
+    label_month INT,
+    label_year INT,
+    adjDividend FLOAT(10),
+    dividend FLOAT(10),
+    recordDate DATE,
+    paymentDate DATE,
+    declarationDate DATE
+)
+
+SELECT * FROM financialdata.delistedcompanies

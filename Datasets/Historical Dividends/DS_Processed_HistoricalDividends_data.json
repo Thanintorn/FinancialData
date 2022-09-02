@@ -1,0 +1,27 @@
+{
+    "name": "DS_Processed_HistoricalDividends_data",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "LS_adls_financialdata",
+            "type": "LinkedServiceReference"
+        },
+        "folder": {
+            "name": "Historical Dividends"
+        },
+        "annotations": [],
+        "type": "DelimitedText",
+        "typeProperties": {
+            "location": {
+                "type": "AzureBlobFSLocation",
+                "folderPath": "HistoricalDividends",
+                "fileSystem": "processed"
+            },
+            "columnDelimiter": ",",
+            "escapeChar": "\\",
+            "firstRowAsHeader": true,
+            "quoteChar": "\""
+        },
+        "schema": []
+    },
+    "type": "Microsoft.DataFactory/factories/datasets"
+}

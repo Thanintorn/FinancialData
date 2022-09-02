@@ -1,0 +1,46 @@
+{
+    "name": "DF_DelistedCompanies",
+    "properties": {
+        "type": "MappingDataFlow",
+        "typeProperties": {
+            "sources": [
+                {
+                    "dataset": {
+                        "referenceName": "DS_dl_DelistedCompanies",
+                        "type": "DatasetReference"
+                    },
+                    "name": "DelistedCompaniesSourceData"
+                }
+            ],
+            "sinks": [
+                {
+                    "dataset": {
+                        "referenceName": "DS_Processed_DelistedCompanies_data",
+                        "type": "DatasetReference"
+                    },
+                    "name": "DelistedCompanieSinkData"
+                }
+            ],
+            "transformations": [],
+            "scriptLines": [
+                "source(output(",
+                "          symbol as string,",
+                "          companyName as string,",
+                "          exchange as string,",
+                "          ipoDate as date,",
+                "          delistedDate as date",
+                "     ),",
+                "     allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     ignoreNoFilesFound: false) ~> DelistedCompaniesSourceData",
+                "DelistedCompaniesSourceData sink(allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     umask: 0022,",
+                "     preCommands: [],",
+                "     postCommands: [],",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true) ~> DelistedCompanieSinkData"
+            ]
+        }
+    }
+}

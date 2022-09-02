@@ -1,0 +1,81 @@
+{
+    "name": "DF_HistoricalDividends",
+    "properties": {
+        "type": "MappingDataFlow",
+        "typeProperties": {
+            "sources": [
+                {
+                    "dataset": {
+                        "referenceName": "DS_dl_HistoricalDividends",
+                        "type": "DatasetReference"
+                    },
+                    "name": "HistoricalDividendsSource"
+                }
+            ],
+            "sinks": [
+                {
+                    "dataset": {
+                        "referenceName": "DS_Processed_HistoricalDividends_data",
+                        "type": "DatasetReference"
+                    },
+                    "name": "HistoricalDividendsSink"
+                }
+            ],
+            "transformations": [
+                {
+                    "name": "derivedDateColumn"
+                },
+                {
+                    "name": "selectColumn"
+                },
+                {
+                    "name": "derivedColumn2"
+                },
+                {
+                    "name": "filterUnknowRecord"
+                }
+            ],
+            "scriptLines": [
+                "source(output(",
+                "          symbol as string,",
+                "          date as date,",
+                "          label as string,",
+                "          adjDividend as float,",
+                "          dividend as float,",
+                "          recordDate as date,",
+                "          paymentDate as date,",
+                "          declarationDate as date",
+                "     ),",
+                "     allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     ignoreNoFilesFound: false) ~> HistoricalDividendsSource",
+                "filterUnknowRecord derive(recordDate = addDays(date, 3),",
+                "          paymentDate = addDays(date, 6),",
+                "          declarationDate = iif(isNull(declarationDate), date, declarationDate)) ~> derivedDateColumn",
+                "derivedColumn2 select(mapColumn(",
+                "          date,",
+                "          label,",
+                "          label_date,",
+                "          label_month,",
+                "          label_year,",
+                "          adjDividend,",
+                "          dividend,",
+                "          recordDate,",
+                "          paymentDate,",
+                "          declarationDate",
+                "     ),",
+                "     skipDuplicateMapInputs: false,",
+                "     skipDuplicateMapOutputs: false) ~> selectColumn",
+                "HistoricalDividendsSource derive(label_date = dayOfMonth(date),",
+                "          label_month = month(date),",
+                "          label_year = year(date)) ~> derivedColumn2",
+                "selectColumn filter(!isNull(recordDate)) ~> filterUnknowRecord",
+                "derivedDateColumn sink(allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     umask: 0022,",
+                "     preCommands: [],",
+                "     postCommands: []) ~> HistoricalDividendsSink"
+            ]
+        }
+    }
+}
